@@ -45,7 +45,7 @@ def _split_file(filepath_par,filename):
 
 
 
-path = '../data/books_small/'
+path = '../data/book_small_preprocessed/'
 print(os.listdir(path))
 for i in os.listdir(path):        # 藏
     ls_1 = path + i + '/'
@@ -56,7 +56,7 @@ for i in os.listdir(path):        # 藏
             book_path = ls_2 + k 
             sz = os.path.getsize(book_path)
             if(sz>8388608):
-                _split_file(ls_2,k)
+                # _split_file(ls_2,k)
                 # print(book_path)
                 # print(sz/1024/1024)
 

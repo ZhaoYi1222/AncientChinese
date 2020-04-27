@@ -19,8 +19,8 @@ sentencizer.load('/home/zy/mnt/nlp_test/Jiayan/jiayan_models/cut_model')
 
 reg = "[^0-9A-Za-z\u4e00-\u9fa5]"
 
-path = './books_small/'
-out_path = './book_small_preprocessed/'
+path = '../data/books_small/'
+out_path = '../data/book_small_preprocessed/'
 print(os.listdir(path))
 for ii in os.listdir(path):        # 藏
     ls_1 = path + ii + '/'
@@ -36,7 +36,7 @@ for ii in os.listdir(path):        # 藏
             fg = open(out_path+ii+'/'+jj+'/'+kk,'w')
             ls = fp.readlines()
             out_ls=[]
-            for i in tqdm(range(len(ls))):
+            for i in range(len(ls)):
                 tmp_list=sentencizer.sentencize(ls[i])
                 merge_list=[]
                 for j in range(len(tmp_list)):

@@ -10,7 +10,7 @@ db = client['book']
 record_collection = db['book_collection']
 data_list=[]
 
-path = '../data/books_small/'
+path = '../data/book_small/'
 print(os.listdir(path))
 for i in os.listdir(path):        # 藏
     ls_1 = path + i + '/'
