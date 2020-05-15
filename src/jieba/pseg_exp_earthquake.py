@@ -5,7 +5,7 @@ import re
 import jieba.posseg as pseg
 jieba.enable_parallel(8)
 jieba.enable_paddle()
-fp=open("words.txt","r")
+fp=open("words_earthquake.txt","r")
 #fg=open("zhejiang.txt","r")
 #fn=open("zj.out","w")
 reg = "[^0-9A-Za-z\u4e00-\u9fa5]"
@@ -21,8 +21,15 @@ for i in range(len(fp_ls)):
 pattern=re.compile(stri) #构造正则过滤
 
 path = '../../data/book_small/'
-out_path = '../../data/book_small_cut/'
+out_path = '../../data/book_small_earthquake/'
 print(os.listdir(path))
+
+isexist=os.path.exists(out_path)
+if not isexist:
+    os.makedirs(out_path)
+fn=open(out_path+'earthquake.txt','w')
+
+put_ls=[]
 for ii in os.listdir(path):        # 藏
     ls_1 = path + ii + '/'
     for jj in os.listdir(ls_1):    # 部
@@ -34,9 +41,9 @@ for ii in os.listdir(path):        # 藏
             isexist = os.path.exists(out_path+ii+'/'+jj+'/')
             if not isexist:
                 os.makedirs(out_path+ii+'/'+jj+'/')
-            fn = open(out_path+ii+'/'+jj+'/'+kk,'w')
+            #fn = open(out_path+ii+'/'+jj+'/'+kk,'w')
             out_ls=[]
-            put_ls=[]
+            # put_ls=[]
             fg_ls=fg.readlines()
             for i in range(len(fg_ls)):
                 result=pattern.findall(fg_ls[i])
@@ -47,7 +54,12 @@ for ii in os.listdir(path):        # 藏
                     tmp_ls=[]
                     strj=""
                     for word,flag in doc:
-                        strj+=word+" "+flag+" "
+                        if flag=='LOC' or flag=='PER' or flag=='ORG' or flag=='TIME' or flag=='t' or flag=='nr' or flag=='ns' or flag=='nt' or (word in fp_ls):
+                            strj+=word+" "+flag+" "
+                    tmp_ls.append(strj)
+                    out_ls.append(tmp_ls)
+                    tmp_ls=[]
+                    strj=ii+'_'+jj+'_'+kk
                     tmp_ls.append(strj)
                     out_ls.append(tmp_ls)
              
@@ -57,9 +69,11 @@ for ii in os.listdir(path):        # 藏
                     stri+=j+" "
                 stri+="\n"
                 put_ls.append(stri)
-            fn.writelines(put_ls)
+            #fn.writelines(put_ls)
             fg.close()
-            fn.close()
+            #fn.close()
+fn.writelines(put_ls)
+fn.close()
 fp.close()
 
 

@@ -21,7 +21,7 @@ for i in range(len(fp_ls)):
 pattern=re.compile(stri) #构造正则过滤
 
 path = '../../data/book_small/'
-out_path = '../../data/book_small_cut/'
+out_path = '../../data/book_small_2list/'
 print(os.listdir(path))
 for ii in os.listdir(path):        # 藏
     ls_1 = path + ii + '/'
@@ -47,7 +47,8 @@ for ii in os.listdir(path):        # 藏
                     tmp_ls=[]
                     strj=""
                     for word,flag in doc:
-                        strj+=word+" "+flag+" "
+                        if flag=='LOC' or flag=='PER' or flag=='ORG' or flag=='TIME' or flag=='t' or flag=='nr' or flag=='ns' or flag=='nt' or (word in fp_ls):
+                            strj+=word+" "+flag+" "
                     tmp_ls.append(strj)
                     out_ls.append(tmp_ls)
              
